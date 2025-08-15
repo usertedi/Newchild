@@ -1,0 +1,45 @@
+{
+  "name": "safenet-guardian",
+  "version": "1.0.0",
+  "description": "Advanced parental control browser extension with multi-language support",
+  "main": "background.js",
+  "scripts": {
+    "build": "zip -r safenet-guardian.zip . -x '*.git*' 'README.md' 'package.json' 'node_modules/*' '*.zip'",
+    "build:firefox": "web-ext build",
+    "test": "echo 'Open test.html in browser with extension loaded'",
+    "lint": "echo 'Add linting configuration here'",
+    "dev": "echo 'Load extension in browser for development'"
+  },
+  "keywords": [
+    "parental-control",
+    "browser-extension",
+    "content-filtering",
+    "family-safety",
+    "multi-language",
+    "chrome-extension",
+    "firefox-addon"
+  ],
+  "author": "SafeNet Guardian Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/safenet-guardian.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-repo/safenet-guardian/issues"
+  },
+  "homepage": "https://github.com/your-repo/safenet-guardian#readme",
+  "devDependencies": {
+    "web-ext": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "Chrome >= 88",
+    "Firefox >= 85",
+    "Edge >= 88"
+  ]
+}
+
+

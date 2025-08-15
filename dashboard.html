@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNet Guardian - Parent Dashboard</title>
+    
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --success-color: #4CAF50;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .nav-tabs {
+            border: none;
+            background: var(--light-color);
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 0;
+            padding: 15px 25px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .nav-tabs .nav-link.active {
+            background: white;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-content {
+            padding: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background: var(--light-color);
+            border: none;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-active {
+            background: var(--success-color);
+        }
+
+        .status-inactive {
+            background: var(--danger-color);
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .stats-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin: 5px 0 0 0;
+        }
+
+        .rule-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .rule-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .rule-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Minimal tabs behavior */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        .nav-tabs .nav-link.active { border-bottom: 3px solid var(--primary-color); }
+
+        /* Minimal modal styles */
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.5); }
+        .modal.show { display: block; }
+        .modal-dialog { position: relative; margin: 10% auto; max-width: 500px; width: 90%; }
+        .modal-content { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .modal-header, .modal-footer { padding: 12px 16px; background: var(--light-color); }
+        .modal-body { padding: 16px; }
+        .btn-close { cursor: pointer; background: transparent; border: none; font-size: 18px; }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1><i class="fas fa-shield-alt"></i> SafeNet Guardian</h1>
+            <p>Advanced Parental Control Dashboard</p>
+        </div>
+
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-tab-target="#overview" type="button" role="tab">
+                    <i class="fas fa-chart-line"></i> Overview
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-tab-target="#sites" type="button" role="tab">
+                    <i class="fas fa-globe"></i> Blocked Sites
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-tab-target="#keywords" type="button" role="tab">
+                    <i class="fas fa-key"></i> Keywords
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-tab-target="#settings" type="button" role="tab">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-tab-target="#logs" type="button" role="tab">
+                    <i class="fas fa-list"></i> Activity Log
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="dashboardTabContent">
+            <!-- Overview Tab -->
+            <div class="tab-pane active" id="overview" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <p class="stats-number" id="totalBlocks">0</p>
+                            <p class="stats-label">Total Blocks</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <p class="stats-number" id="blockedSites">0</p>
+                            <p class="stats-label">Blocked Sites</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <p class="stats-number" id="blockedKeywords">0</p>
+                            <p class="stats-label">Keywords</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <p class="stats-number" id="protectionStatus">ON</p>
+                            <p class="stats-label">Protection</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar"></i> Recent Activity
+                    </div>
+                    <div class="card-body">
+                        <div id="recentActivity">
+                            <p class="text-muted">No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blocked Sites Tab -->
+            <div class="tab-pane" id="sites" role="tabpanel">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-globe"></i> Blocked Websites</span>
+                        <button class="btn btn-primary" id="openAddSite">
+                            <i class="fas fa-plus"></i> Add Site
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="blockedSitesList">
+                            <!-- Sites will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keywords Tab -->
+            <div class="tab-pane" id="keywords" role="tabpanel">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-key"></i> Blocked Keywords</span>
+                        <button class="btn btn-primary" id="openAddKeyword">
+                            <i class="fas fa-plus"></i> Add Keyword
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="languageTabs" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-tab-target="#en-keywords">English</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-tab-target="#am-keywords">Amharic</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-tab-target="#ar-keywords">Arabic</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane active" id="en-keywords">
+                                <div id="enKeywordsList"></div>
+                            </div>
+                            <div class="tab-pane" id="am-keywords">
+                                <div id="amKeywordsList"></div>
+                            </div>
+                            <div class="tab-pane" id="ar-keywords">
+                                <div id="arKeywordsList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-pane" id="settings" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-cog"></i> General Settings
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Protection Status</label>
+                            <div class="d-flex align-items-center">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="protectionToggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="ms-3" id="protectionStatusText">Protection is ON</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Update Rules</label>
+                            <button class="btn btn-secondary" id="updateRulesBtn">
+                                <i class="fas fa-sync"></i> Update Rules
+                            </button>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Export/Import Settings</label>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-primary" id="exportBtn">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                                <button class="btn btn-outline-primary" id="importBtn">
+                                    <i class="fas fa-upload"></i> Import
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Log Tab -->
+            <div class="tab-pane" id="logs" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-list"></i> Activity Log
+                    </div>
+                    <div class="card-body">
+                        <div id="activityLog">
+                            <!-- Log entries will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Site Modal -->
+    <div class="modal" id="addSiteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Blocked Site</h5>
+                    <button type="button" class="btn-close modal-close" data-target="#addSiteModal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Website URL</label>
+                        <input type="text" class="form-control" id="newSiteUrl" placeholder="example.com or *.example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-control" id="siteCategory">
+                            <option value="adult">Adult Content</option>
+                            <option value="gambling">Gambling</option>
+                            <option value="scams">Scams/Fraud</option>
+                            <option value="violence">Violence</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close" data-target="#addSiteModal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveSiteBtn">Add Site</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Keyword Modal -->
+    <div class="modal" id="addKeywordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Blocked Keyword</h5>
+                    <button type="button" class="btn-close modal-close" data-target="#addKeywordModal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Language</label>
+                        <select class="form-control" id="keywordLanguage">
+                            <option value="en">English</option>
+                            <option value="am">Amharic</option>
+                            <option value="ar">Arabic</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Keyword</label>
+                        <input type="text" class="form-control" id="newKeyword" placeholder="Enter keyword">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-control" id="keywordCategory">
+                            <option value="adult">Adult Content</option>
+                            <option value="gambling">Gambling</option>
+                            <option value="scams">Scams/Fraud</option>
+                            <option value="violence">Violence</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-close" data-target="#addKeywordModal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveKeywordBtn">Add Keyword</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

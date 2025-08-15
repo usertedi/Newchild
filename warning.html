@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Blocked - SafeNet Guardian</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .warning-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .warning-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+        }
+
+        .shield-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        .warning-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .warning-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .warning-message {
+            background: #f8f9fa;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .warning-message h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .warning-message p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #4CAF50;
+            border: 2px solid #4CAF50;
+        }
+
+        .btn-outline:hover {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4CAF50;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .warning-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .warning-title {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-item {
+                padding: 10px;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="warning-container">
+        <div class="shield-icon pulse">🛡️</div>
+        
+        <h1 class="warning-title">Content Blocked</h1>
+        <p class="warning-subtitle">
+            SafeNet Guardian has blocked access to this content to protect your family from inappropriate material.
+        </p>
+
+        <div class="warning-message">
+            <h3>Why was this blocked?</h3>
+            <p>
+                This page was blocked because it contains content that matches our safety filters. 
+                This could include adult content, gambling sites, scams, or other inappropriate material.
+            </p>
+            <p>
+                <strong>Blocked URL:</strong> <span id="blockedUrl">Loading...</span>
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="totalBlocks">0</span>
+                <span class="stat-label">Total Blocks Today</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="protectionDays">0</span>
+                <span class="stat-label">Days Protected</span>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </button>
+            <button class="btn btn-outline" onclick="openDashboard()">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+            <button class="btn btn-secondary" onclick="reportFalsePositive()">
+                <i class="fas fa-flag"></i> Report Issue
+            </button>
+        </div>
+
+        <div class="footer">
+            <p>
+                SafeNet Guardian is protecting your family 24/7. 
+                <a href="#" onclick="openDashboard()">Manage settings</a> or 
+                <a href="#" onclick="learnMore()">learn more</a> about our protection features.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Get blocked URL from URL parameters
+        function getBlockedUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('url') || 'Unknown URL';
+        }
+
+        // Update page with blocked URL
+        document.getElementById('blockedUrl').textContent = getBlockedUrl();
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const data = await chrome.storage.local.get(['blockLog', 'installDate']);
+                
+                // Calculate total blocks today
+                const today = new Date().toDateString();
+                const todayBlocks = data.blockLog ? data.blockLog.filter(entry => 
+                    new Date(entry.timestamp).toDateString() === today
+                ).length : 0;
+                
+                document.getElementById('totalBlocks').textContent = todayBlocks;
+
+                // Calculate protection days
+                const installDate = data.installDate || Date.now();
+                const daysProtected = Math.floor((Date.now() - installDate) / (1000 * 60 * 60 * 24));
+                document.getElementById('protectionDays').textContent = daysProtected;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Navigation functions
+        function goBack() {
+            window.history.back();
+        }
+
+        function openDashboard() {
+            chrome.runtime.sendMessage({ type: 'OPEN_DASHBOARD' });
+        }
+
+        function reportFalsePositive() {
+            const blockedUrl = getBlockedUrl();
+            const reportUrl = `mailto:support@safenetguardian.com?subject=False Positive Report&body=URL: ${blockedUrl}%0D%0A%0D%0APlease describe why you believe this is a false positive:`;
+            window.open(reportUrl);
+        }
+
+        function learnMore() {
+            window.open('https://safenetguardian.com/help', '_blank');
+        }
+
+        // Load stats when page loads
+        document.addEventListener('DOMContentLoaded', loadStats);
+
+        // Add some interactivity
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
+
+

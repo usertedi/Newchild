@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNet Guardian - Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-section h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        .keyword-test {
+            background: #f9f9f9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #4CAF50;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>SafeNet Guardian - Test Page</h1>
+    
+    <div class="warning">
+        <strong>⚠️ Warning:</strong> This page contains test content that should trigger SafeNet Guardian's blocking system. 
+        If the extension is working correctly, this page should be blocked.
+    </div>
+
+    <div class="test-section">
+        <h3>Test Keywords (English)</h3>
+        <div class="keyword-test">
+            This page contains test keywords like porn, gambling, and scam to test the filtering system.
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test Keywords (Amharic)</h3>
+        <div class="keyword-test">
+            This page contains Amharic test keywords: ወንጀለኛ ማሳለፊያ ውሸት ማስታለቂያ
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test Keywords (Arabic)</h3>
+        <div class="keyword-test">
+            This page contains Arabic test keywords: إباحية قمار احتيال مخدرات
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>Additional Test Content</h3>
+        <p>
+            This is additional content that should trigger the keyword detection system. 
+            The words adult, sex, nude, casino, bet, fraud, hack, crack, warez, drugs, 
+            cocaine, heroin, marijuana, weed, violence, kill, murder, suicide, bomb, 
+            terrorism, extremist, hate, and racism are all test keywords.
+        </p>
+    </div>
+
+    <div class="test-section">
+        <h3>Instructions</h3>
+        <ol>
+            <li>Load this page in a browser with SafeNet Guardian installed</li>
+            <li>If the extension is working, you should see a blocking overlay</li>
+            <li>If no blocking occurs, check the extension settings</li>
+            <li>Check the browser console for any error messages</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h3>Debug Information</h3>
+        <p>Check the browser console for SafeNet Guardian debug messages.</p>
+        <p>Look for messages starting with <code>[SafeNet]</code></p>
+    </div>
+</body>
+</html>
+
+

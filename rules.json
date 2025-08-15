@@ -1,0 +1,69 @@
+{
+  "blocked_sites": [
+    "example-adult-site.com",
+    "*.gambling.com",
+    "*.casino.com",
+    "*.bet.com",
+    "scam-site.net",
+    "fake-news-site.com",
+    "malware-site.org",
+    "phishing-site.net",
+    "*.porn.com",
+    "*.adult.com",
+    "*.sex.com",
+    "*.drugs.com",
+    "*.hack.com",
+    "*.crack.com",
+    "*.warez.com"
+  ],
+  "keywords": {
+    "en": [
+      "porn", "pornography", "sex", "adult", "nude", "naked",
+      "gambling", "casino", "bet", "poker", "slot", "lottery",
+      "scam", "fraud", "hack", "crack", "warez", "pirate",
+      "drugs", "cocaine", "heroin", "marijuana", "weed",
+      "violence", "kill", "murder", "suicide", "bomb",
+      "terrorism", "extremist", "hate", "racism"
+    ],
+    "am": [
+      "ወንጀለኛ", "ማሳለፊያ", "ውሸት", "ማስታለቂያ", "ውርደት",
+      "ጥቃት", "ግድያ", "ደም", "ዘመቻ", "ውጥረት",
+      "ውርስ", "ውርስወርስ", "ውርስወርስወርስ", "ውርስወርስወርስወርስ"
+    ],
+    "ar": [
+      "إباحية", "قمار", "احتيال", "مخدرات", "عنف",
+      "قتل", "انتحار", "قنبلة", "إرهاب", "متطرف",
+      "كراهية", "عنصرية", "جريمة", "سرقة"
+    ]
+  },
+  "categories": {
+    "adult": {
+      "sites": ["*.adult.com", "*.porn.com"],
+      "keywords": {
+        "en": ["porn", "pornography", "sex", "adult", "nude"],
+        "am": ["ወንጀለኛ", "ማሳለፊያ"],
+        "ar": ["إباحية", "جنس"]
+      }
+    },
+    "gambling": {
+      "sites": ["*.gambling.com", "*.casino.com"],
+      "keywords": {
+        "en": ["gambling", "casino", "bet", "poker", "slot"],
+        "am": ["ውርስ", "ውርስወርስ"],
+        "ar": ["قمار", "كازينو"]
+      }
+    },
+    "scams": {
+      "sites": ["scam-site.net", "fake-news-site.com"],
+      "keywords": {
+        "en": ["scam", "fraud", "fake", "phishing"],
+        "am": ["ውሸት", "ማስታለቂያ"],
+        "ar": ["احتيال", "زائف"]
+      }
+    }
+  },
+  "version": "1.0.0",
+  "last_updated": "2024-01-01"
+}
+
+
